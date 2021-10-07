@@ -29,7 +29,8 @@ app.use(express.static('public'));
 
 // Error handling  
 app.use((err, req, res, next) => {
-  
+  console.error(err.stack);
+  res.stats(500).send('Sorry, something went wrong...');
 });
 
 // Listen for requests
