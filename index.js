@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
   res.send('Welcome!');
 });
 
-app.get('/movie', (req, res) => {
+app.get('/movies', (req, res) => {
   res.json(myMovie);
 });
 
