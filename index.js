@@ -47,7 +47,7 @@ let myMovie = [
     title: 'LOVE IN THE AFTERNOON ',
     year: 1957
   } 
-]
+];
 //myMovie info end 
 
 app.get('/', (req, res) => {
