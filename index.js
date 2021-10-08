@@ -9,43 +9,63 @@ app.use(morgan('common'));
 let myMovie = [
   {
     title: 'BREAKFAST AT TIFFANY\'S',
-    year: 1961
+    year: 1961,
+    genre: ['Comedy', 'Romance', 'Drama'],
+    director: 'Blake Edwards'
   },
   {
     title: 'ROMAN HOLIDAY',
-    year: 1953
+    year: 1953,
+    genre: ['Comedy ', 'Romance'],
+    director: 'William Wyler'
   }, 
   {
     title: 'SABRINA ',
-    year: 1954
+    year: 1954,
+    genre: ['Comedy', 'Romance', 'Drama'],
+    director: 'Billy Wilder'
   },
   {
     title: 'CHARADE ',
-    year: 1963
+    year: 1963,
+    genre: ['Mystery', 'Romance', 'Drama'],
+    director: 'Stanley Donen'
   },
   {
     title: 'MY FAIR LADY',
-    year: 1964
+    year: 1964,
+    genre: 'Musical',
+    director: 'George Cukor'
   },
   {
     title: 'FUNNY FACE',
-    year: 1957
+    year: 1957,
+    genre: ['musical', 'Romance', 'Drama'],
+    director: 'Stanley Donen'
   },
   {
     title: 'TWO FOR THE ROAD',
-    year: 1967
+    year: 1967,
+    genre: ['Comedy', 'Romance', 'Drama'],
+    director: 'Stanley Donen.'
   },
   {
     title: 'THE NUN’S STORY',
-    year: 1959
+    year: 1959,
+    genre: 'Drama',
+    director: 'Fred Zinnemann'
   },
   {
     title: 'WAIT UNTIL DARK',
-    year: 1967
+    year: 1967,
+    genre: ['Horror', 'Thriller', 'Suspense', 'Drama'],
+    director: 'Terence Young'
   },
   {
     title: 'LOVE IN THE AFTERNOON ',
-    year: 1957
+    year: 1957,
+    genre: ['Comedy', 'Romance', 'Drama'],
+    director: 'Billy Wilder'
   } 
 ];
 //myMovie info end 
