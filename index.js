@@ -59,7 +59,7 @@ app.get('/movies', (req, res) => {
 });
 
 // Serving static files
-app.use(express.static('public'));
+app.use(express.static('public',{extensions:['html']}));
 
 // Error handling  
 app.use((err, req, res, next) => {
