@@ -1,9 +1,8 @@
 const express = require('express'),
-morgan = require('morgan');
+morgan = require('morgan'),
+fs = require('fs');
 
 const app = express();
-
-app.use(morgan('common'));
 
 //myMovie info
 let myMovie = [
@@ -70,6 +69,14 @@ let myMovie = [
 ];
 //myMovie info end 
 
+// Log all requests to log.txt
+app.use(morgan('common', {
+  stream: fs.createWriteStream('./log.txt', {flags: 'a'})
+}));
+// Log all requests to console
+app.use(morgan('common'));
+
+// Get requests
 app.get('/', (req, res) => {
   res.send('Welcome!');
 });

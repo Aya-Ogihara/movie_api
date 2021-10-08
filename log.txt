@@ -1,60 +1,10 @@
-URL: /
-Timestamp: Tue Oct 05 2021 15:09:45 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:09:45 GMT+1300 (New Zealand Daylight Time)
-
-URL: /documentation
-Timestamp: Tue Oct 05 2021 15:10:05 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:10:05 GMT+1300 (New Zealand Daylight Time)
-
-URL: /test
-Timestamp: Tue Oct 05 2021 15:10:19 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:10:19 GMT+1300 (New Zealand Daylight Time)
-
-URL: /
-Timestamp: Tue Oct 05 2021 15:28:56 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:28:57 GMT+1300 (New Zealand Daylight Time)
-
-URL: /documentation
-Timestamp: Tue Oct 05 2021 15:29:07 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:29:07 GMT+1300 (New Zealand Daylight Time)
-
-URL: /documentation
-Timestamp: Tue Oct 05 2021 15:29:34 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:29:34 GMT+1300 (New Zealand Daylight Time)
-
-URL: /docu
-Timestamp: Tue Oct 05 2021 15:29:38 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:29:39 GMT+1300 (New Zealand Daylight Time)
-
-URL: /docu
-Timestamp: Tue Oct 05 2021 15:29:46 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:29:46 GMT+1300 (New Zealand Daylight Time)
-
-URL: /documentation
-Timestamp: Tue Oct 05 2021 15:45:07 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:45:07 GMT+1300 (New Zealand Daylight Time)
-
-URL: /documentatio
-Timestamp: Tue Oct 05 2021 15:45:17 GMT+1300 (New Zealand Daylight Time)
-
-URL: /favicon.ico
-Timestamp: Tue Oct 05 2021 15:45:18 GMT+1300 (New Zealand Daylight Time)
-
+::1 - - [08/Oct/2021:00:56:19 +0000] "GET / HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:00:56:35 +0000] "GET /documentation HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:08:26 +0000] "GET /index.html HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:08:49 +0000] "GET / HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:09:04 +0000] "GET /index HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:09:56 +0000] "GET / HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:10:10 +0000] "GET /documentation HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:28:16 +0000] "GET / HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:28:31 +0000] "GET /movies HTTP/1.1" 304 -
+::1 - - [08/Oct/2021:01:28:47 +0000] "GET /documentation HTTP/1.1" 304 -
