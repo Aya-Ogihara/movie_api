@@ -5,6 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>myFlix Documentation</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      table {
+        width: 80%;
+      }
+    </style>
   </head>
   <body>
     <header></header>
@@ -39,6 +49,103 @@
         <li>Allow users to remove a movie from their list of favorites</li>
         <li>Allow existing users to deregister</li>
       </ul>
+
+      <h2>Endpoint Structure</h2>
+
+      <table>
+        <!-- About movies-->
+        <tr>
+          <th>Request</th>
+          <th>URL</th>
+          <th>HTTP Method</th>
+          <th>Request body data format</th>
+          <th>Response body data format</th>
+        </tr>
+
+        <tr>
+          <td>Return a list of all movies</td>
+          <td>/movies</td>
+          <td>GET</td>
+          <td>none</td>
+          <td>A JSON object holding data about all the movies</td>
+        </tr>
+
+        <tr>
+          <td>
+            Return data (description, genre, director, image URL etc..) about a
+            single movie by title
+          </td>
+          <td>/movies/[title]</td>
+          <td>GET</td>
+          <td>none</td>
+          <td>A JSON object holding data about the movie</td>
+        </tr>
+
+        <tr>
+          <td>Return data about a genre (description) by title</td>
+          <td>/movies/genres/[title]</td>
+          <td>GET</td>
+          <td>none</td>
+          <td>A JSON object holding description of the genre</td>
+        </tr>
+
+        <tr>
+          <td>
+            Return data about a director (bio, birth year, death year) by name
+          </td>
+          <td>/movies/directors</td>
+          <td>GET</td>
+          <td>none</td>
+          <td>A JSON object holding information about the director</td>
+        </tr>
+
+        <!-- About users -->
+        <tr>
+          <td>Allow new users to register</td>
+          <td>/users</td>
+          <td>POST</td>
+          <td>A JSON object holding information about a new user</td>
+          <td>
+            A JSON object holding information about a new added user (include
+            system generated unique user unique id)
+          </td>
+        </tr>
+
+        <tr>
+          <td>Allow users to update their user info</td>
+          <td>/users/[username]</td>
+          <td>PUT</td>
+          <td>A JSON object holding the data which user wants to update</td>
+          <td>A JSON object holding the data about the user</td>
+        </tr>
+
+        <tr>
+          <td>Allow users to add a movie to their list of favorites</td>
+          <td>/users/[username]/favorites</td>
+          <td>POST</td>
+          <td></td>
+          <td>Text message that the movie has been added</td>
+        </tr>
+
+        <tr>
+          <td>Allow users to remove a movie from their list of favorites</td>
+          <td>/users/[username]/favorites/[movieId]</td>
+          <td>DELETE</td>
+          <td></td>
+          <td>
+            Text message that the movie has been removed from user's favorite
+            list
+          </td>
+        </tr>
+
+        <tr>
+          <td>Allow existing users to deregister</td>
+          <td>/users/[username]</td>
+          <td>DELETE</td>
+          <td></td>
+          <td>Text message that the user has been removed from the app</td>
+        </tr>
+      </table>
     </main>
     <footer>&copy; 2021 Aya Ogihara</footer>
   </body>
