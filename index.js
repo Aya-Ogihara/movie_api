@@ -4,8 +4,8 @@ fs = require('fs');
 
 const app = express();
 
-//myMovie info
-let myMovie = [
+//movies info
+let movies = [
   {
     title: 'BREAKFAST AT TIFFANY\'S',
     year: 1961,
@@ -19,13 +19,13 @@ let myMovie = [
     director: 'William Wyler'
   }, 
   {
-    title: 'SABRINA ',
+    title: 'SABRINA',
     year: 1954,
     genre: ['Comedy', 'Romance', 'Drama'],
     director: 'Billy Wilder'
   },
   {
-    title: 'CHARADE ',
+    title: 'CHARADE',
     year: 1963,
     genre: ['Mystery', 'Romance', 'Drama'],
     director: 'Stanley Donen'
@@ -67,7 +67,7 @@ let myMovie = [
     director: 'Billy Wilder'
   } 
 ];
-//myMovie info end 
+//movies info end 
 
 // Log all requests to log.txt
 app.use(morgan('common', {
@@ -76,14 +76,68 @@ app.use(morgan('common', {
 // Log all requests to console
 app.use(morgan('common'));
 
+/*======
+Movies requests 
+======*/
+
 // Get requests
 app.get('/', (req, res) => {
-  res.send('Welcome!');
+  res.send('Welcome to myFlix app!');
 });
 
+// Return a list of all movies
 app.get('/movies', (req, res) => {
-  res.json(myMovie);
+  res.json(movies);
 });
+
+// Return data about a single movie by title
+app.get('/movies/:title', (req, res) => {
+  res.json(movies.find((movie) => {
+    return movie.title === req.params.title
+  }));
+});
+
+// Return data about a genre by title
+app.get('/movies/genres/:title', (req, res) => {
+  res.send('Return genre.');
+});
+
+// Return data about a director by name
+app.get('/movies/directors/:name', (req, res) => {
+  res.send('Return the director\'s information.');
+});
+
+/*======
+Users requests 
+======*/
+
+// Allow new users to register
+app.post('/users', (req, res) => {
+  res.send('Return the new registered user info');
+});
+
+// Allow users to update their user info
+app.put('/users/:username', (req, res) => {
+  res.send('Return the updated user info');
+});
+
+// Allow users to add a movie to their list of favorites
+app.post('/users/:username/favorites', (req, res) => {
+  res.send('The movie has been added to your favorite list');
+});
+
+// Allow users to remove a movie from their list of favorites
+app.delete('/users/:username/favorites/:movieId', (req, res) => {
+  res.send('The movie has been removed from your favorite list');
+});
+// Allow existing users to deregister
+app.delete('/users/:username', (req, res) => {
+  res.send('The user has been removed from the app');
+});
+
+/*======
+All requests end 
+======*/
 
 // Serving static files
 app.use(express.static('public',{extensions:['html']}));
