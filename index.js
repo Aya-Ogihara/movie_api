@@ -104,9 +104,9 @@ Users requests
 ======*/
 
 //Add a user
-/* We’ll expect JSON in this format
+/* Required format in JSON 
 {
-  ID: Integer,
+  ID: Integer, (system generated)
   Username: String, (required)
   Password: String, (required)
   Email: String, (required)
@@ -139,13 +139,6 @@ app.post('/users', (req, res) => {
 });
 
 // Allow users to update their user info by username
-/* We’ll expect JSON in this format
-{
-  Username: String, (required)
-  Password: String, (required)
-  Email: String, (required)
-  Birthday: Date
-}*/
 app.put('/users/:Username', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set: 
     {
@@ -171,7 +164,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username}, {
     $push: { FavoriteMovies: req.params.MovieID }
   },
-  { new: true},
+  { new: true },
   (err, updatedUser) => {
     if (err) {
       console.error(err);
@@ -183,9 +176,21 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 // Allow users to remove a movie from their list of favorites
-app.delete('/users/:Username/movies/:movieId', (req, res) => {
-  res.send('The movie has been removed from your favorite list');
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username}, {
+    $pull: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true },
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
+
 // Allow existing users to deregister
 app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
