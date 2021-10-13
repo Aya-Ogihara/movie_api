@@ -1,73 +1,19 @@
 const express = require('express'),
 morgan = require('morgan'),
-fs = require('fs');
+fs = require('fs'),
+bodyParser = require('body-parser'),
+mongoose = require('mongoose'),
+Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 
-//movies info
-let movies = [
-  {
-    title: 'BREAKFAST AT TIFFANY\'S',
-    year: 1961,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Blake Edwards'
-  },
-  {
-    title: 'ROMAN HOLIDAY',
-    year: 1953,
-    genre: ['Comedy ', 'Romance'],
-    director: 'William Wyler'
-  }, 
-  {
-    title: 'SABRINA',
-    year: 1954,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Billy Wilder'
-  },
-  {
-    title: 'CHARADE',
-    year: 1963,
-    genre: ['Mystery', 'Romance', 'Drama'],
-    director: 'Stanley Donen'
-  },
-  {
-    title: 'MY FAIR LADY',
-    year: 1964,
-    genre: 'Musical',
-    director: 'George Cukor'
-  },
-  {
-    title: 'FUNNY FACE',
-    year: 1957,
-    genre: ['musical', 'Romance', 'Drama'],
-    director: 'Stanley Donen'
-  },
-  {
-    title: 'TWO FOR THE ROAD',
-    year: 1967,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Stanley Donen.'
-  },
-  {
-    title: 'THE NUN’S STORY',
-    year: 1959,
-    genre: 'Drama',
-    director: 'Fred Zinnemann'
-  },
-  {
-    title: 'WAIT UNTIL DARK',
-    year: 1967,
-    genre: ['Horror', 'Thriller', 'Suspense', 'Drama'],
-    director: 'Terence Young'
-  },
-  {
-    title: 'LOVE IN THE AFTERNOON ',
-    year: 1957,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Billy Wilder'
-  } 
-];
-//movies info end 
 
 // Log all requests to log.txt
 app.use(morgan('common', {
@@ -111,9 +57,39 @@ app.get('/movies/directors/:name', (req, res) => {
 Users requests 
 ======*/
 
-// Allow new users to register
+//Add a user
+/* We’ll expect JSON in this format
+{
+  ID: Integer,
+  Username: String,
+  Password: String,
+  Email: String,
+  Birthday: Date
+}*/
 app.post('/users', (req, res) => {
-  res.send('Return the new registered user info');
+  Users.findOne({ Username: req.body.Username})
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(`${req.body.Username} already exists`);
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Pass,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) => {res.status(201).json(user)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send(`Error: ${error}`);
+        })  
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send(`Error: ${error}`);
+    })
 });
 
 // Allow users to update their user info
