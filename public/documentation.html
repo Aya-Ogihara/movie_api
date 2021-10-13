@@ -78,25 +78,80 @@
           <td>/movies/[title]</td>
           <td>GET</td>
           <td>none</td>
-          <td>A JSON object holding data about the movie</td>
+          <td>
+            A JSON object holding data about the movie <br />
+            Example: <br />
+            {<br />
+            "_id" : ObjectId("616504fbe98c082e3d1e8efb"),<br />
+            "Title" : "ROMAN HOLIDAY",<br />
+            "Description" : "William Wyler's effervescent romantic comedy
+            introduced Hepburn to the world, winning her an Oscar as Best
+            Actress in the process. Roman Holiday centers on a royal princess
+            (Hepburn) who's grown bored with her sheltered life, and escapes her
+            guardians while vacationing in Rome. She meets an American reporter
+            (Gregory Peck) who, hungry for a scoop, agrees to show her around
+            town.",<br />
+            "Genre" : {<br />
+            "Name" : "Romance",<br />
+            "Description" : "Romance films or romance movies are romantic love
+            stories recorded in visual media for broadcast in theaters and on TV
+            that focus on passion, emotion, and the affectionate romantic
+            involvement of the main characters and the journey that their love
+            takes them through dating, courtship or marriage."<br />
+            },<br />
+            "Director" : {<br />
+            "Name" : "William Wyler",<br />
+            "Bio" : "William Wyler was a Swiss-German-American film director and
+            producer.",<br />
+            "Birth" : "1902",<br />
+            "Death" : "1981"<br />
+            },<br />
+            "ImagePath" :
+            "https://www.imdb.com/title/tt0046250/mediaviewer/rm3628859648/",<br />
+            "Featured" : true<br />
+            }
+          </td>
         </tr>
 
         <tr>
           <td>Return data about a genre (description) by name</td>
-          <td>/movies/genres/[name]</td>
+          <td>/genres/[name]</td>
           <td>GET</td>
           <td>none</td>
-          <td>A JSON object holding description of the genre</td>
+          <td>
+            A JSON object holding description of the genre<br />
+            Example: <br />
+            {<br />
+            "_id": "616657c989393149856fa3b5",<br />
+            "Name": "Drama",<br />
+            "Description": "The drama genre features stories with high stakes
+            and a lot of conflicts. They're plot-driven and demand that every
+            character and scene move the story forward. Dramas follow a clearly
+            defined narrative plot structure, portraying real-life scenarios or
+            extreme situations with emotionally-driven characters."<br />
+            }
+          </td>
         </tr>
 
         <tr>
           <td>
             Return data about a director (bio, birth year, death year) by name
           </td>
-          <td>/movies/directors/[name]</td>
+          <td>/directors/[name]</td>
           <td>GET</td>
           <td>none</td>
-          <td>A JSON object holding information about the director</td>
+          <td>
+            A JSON object holding information about the director<br />
+            Example: <br />
+            {<br />
+            "_id": "61665b0b89393149856fa3bb",<br />
+            "Name": "William Wyler",<br />
+            "Bio": "William Wyler was a Swiss-German-American film director and
+            producer.",<br />
+            "Birth": "1902",<br />
+            "Death": "1981"<br />
+            }
+          </td>
         </tr>
 
         <!-- About users -->
@@ -104,10 +159,29 @@
           <td>Allow new users to register</td>
           <td>/users</td>
           <td>POST</td>
-          <td>A JSON object holding information about a new user</td>
+          <td>
+            A JSON object holding information about a new user
+            <br />
+            Required format in JSON<br />
+            {<br />
+            Username: String, (required)<br />
+            Password: String, (required)<br />
+            Email: String, (required)<br />
+            Birthday: Date<br />
+            }<br />
+          </td>
           <td>
             A JSON object holding information about a new added user (include
-            system generated unique user unique id)
+            system generated unique user unique id)<br />
+            Example: <br />
+            {<br />
+            "Username": "testuser01",<br />
+            "Password": "test1234",<br />
+            "Email": "testuser01@mail.com",<br />
+            "FavoriteMovies": [],<br />
+            "_id": "6166642b00b713b2046be629",<br />
+            "__v": 0<br />
+            }<br />
           </td>
         </tr>
 
@@ -115,8 +189,28 @@
           <td>Allow users to update their user info</td>
           <td>/users/[username]</td>
           <td>PUT</td>
-          <td>A JSON object holding the data which user wants to update</td>
-          <td>A JSON object holding the data about the user</td>
+          <td>
+            A JSON object holding the data which user wants to update<br />
+            Required format in JSON<br />
+            {<br />
+            Username: String, (required)<br />
+            Password: String, (required)<br />
+            Email: String, (required)<br />
+            Birthday: Date<br />
+            }<br />
+          </td>
+          <td>
+            A JSON object holding the data about the user <br />
+            Example: <br />
+            { <br />
+            "_id": "6166642b00b713b2046be629", <br />
+            "Username": "testuser01", <br />
+            "Password": "test1234", <br />
+            "Email": "testuser01@gmail.com", <br />
+            "FavoriteMovies": [], <br />
+            "__v": 0 <br />
+            }
+          </td>
         </tr>
 
         <tr>
