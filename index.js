@@ -1,9 +1,10 @@
 const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
-  mongoose = require('mongoose'),
-  Models = require('./models.js');
+  mongoose = require('mongoose');
 
+// import 'model.js' file
+const Models = require('./models.js');
 const Movies = Models.Movie;
 const Genres = Models.Genre;
 const Directors = Models.Director;
@@ -13,8 +14,17 @@ const Users = Models.User;
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
+
+// bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// import 'auth.js' file 
+const auth = require('./auth')(app);
+
+// import 'passport.js' file
+const passport = require('passport');
+require = ('./passport');
 
 // Log all requests to console
 app.use(morgan('common'));
