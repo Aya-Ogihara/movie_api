@@ -1,78 +1,20 @@
 const express = require('express'),
 morgan = require('morgan'),
-fs = require('fs');
+bodyParser = require('body-parser'),
+mongoose = require('mongoose'),
+Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Genres = Models.Genre;
+const Directors = Models.Director;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-//movies info
-let movies = [
-  {
-    title: 'BREAKFAST AT TIFFANY\'S',
-    year: 1961,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Blake Edwards'
-  },
-  {
-    title: 'ROMAN HOLIDAY',
-    year: 1953,
-    genre: ['Comedy ', 'Romance'],
-    director: 'William Wyler'
-  }, 
-  {
-    title: 'SABRINA',
-    year: 1954,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Billy Wilder'
-  },
-  {
-    title: 'CHARADE',
-    year: 1963,
-    genre: ['Mystery', 'Romance', 'Drama'],
-    director: 'Stanley Donen'
-  },
-  {
-    title: 'MY FAIR LADY',
-    year: 1964,
-    genre: 'Musical',
-    director: 'George Cukor'
-  },
-  {
-    title: 'FUNNY FACE',
-    year: 1957,
-    genre: ['musical', 'Romance', 'Drama'],
-    director: 'Stanley Donen'
-  },
-  {
-    title: 'TWO FOR THE ROAD',
-    year: 1967,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Stanley Donen.'
-  },
-  {
-    title: 'THE NUN’S STORY',
-    year: 1959,
-    genre: 'Drama',
-    director: 'Fred Zinnemann'
-  },
-  {
-    title: 'WAIT UNTIL DARK',
-    year: 1967,
-    genre: ['Horror', 'Thriller', 'Suspense', 'Drama'],
-    director: 'Terence Young'
-  },
-  {
-    title: 'LOVE IN THE AFTERNOON ',
-    year: 1957,
-    genre: ['Comedy', 'Romance', 'Drama'],
-    director: 'Billy Wilder'
-  } 
-];
-//movies info end 
-
-// Log all requests to log.txt
-app.use(morgan('common', {
-  stream: fs.createWriteStream('./log.txt', {flags: 'a'})
-}));
 // Log all requests to console
 app.use(morgan('common'));
 
@@ -87,52 +29,182 @@ app.get('/', (req, res) => {
 
 // Return a list of all movies
 app.get('/movies', (req, res) => {
-  res.json(movies);
+  Movies.find()
+    .then((movies) => {
+      res.status(201).json(movies);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send(`Error: &{err}`);
+    });
 });
 
 // Return data about a single movie by title
-app.get('/movies/:title', (req, res) => {
-  res.json(movies.find((movie) => {
-    return movie.title === req.params.title
-  }));
+app.get('/movies/:Title', (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+  .then((movie) => {
+    res.json(movie);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  })
 });
 
-// Return data about a genre by title
-app.get('/movies/genres/:title', (req, res) => {
-  res.send('Return genre.');
+// Return a list of all genres
+app.get('/genres', (req, res) => {
+  Genres.find()
+  .then((genres) => {
+    res.status(201).json(genres);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: &{err}`);
+  });
+});
+
+// Return data about a genre by name
+app.get('/genres/:Name', (req, res) => {
+  Genres.findOne({ Name: req.params.Name })
+  .then((genre) => {
+    res.json(genre);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  })
+});
+
+// Return a list of all directors
+app.get('/directors', (req, res) => {
+  Directors.find()
+  .then((directors) => {
+    res.status(201).json(directors);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: &{err}`);
+  });
 });
 
 // Return data about a director by name
-app.get('/movies/directors/:name', (req, res) => {
-  res.send('Return the director\'s information.');
+app.get('/directors/:Name', (req, res) => {
+  Directors.findOne({ Name: req.params.Name })
+  .then((director) => {
+    res.json(director);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  })
 });
 
 /*======
 Users requests 
 ======*/
 
-// Allow new users to register
+//Add a user
+/* Required format in JSON 
+{
+  ID: Integer, (system generated)
+  Username: String, (required)
+  Password: String, (required)
+  Email: String, (required)
+  Birthday: Date
+}*/
 app.post('/users', (req, res) => {
-  res.send('Return the new registered user info');
+  Users.findOne({ Username: req.body.Username})
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(`${req.body.Username} already exists`);
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) => {res.status(201).json(user)})
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send(`Error: ${error}`);
+        })  
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send(`Error: ${error}`);
+    })
 });
 
-// Allow users to update their user info
-app.put('/users/:username', (req, res) => {
-  res.send('Return the updated user info');
+// Allow users to update their user info by username
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, { $set: 
+    {
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthday: req.body.Birthday
+    }
+  },
+  { new: true },
+  (err, updatedUser) => {
+    if(err) {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
 
 // Allow users to add a movie to their list of favorites
-app.post('/users/:username/favorites', (req, res) => {
-  res.send('The movie has been added to your favorite list');
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username}, {
+    $push: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true },
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
 
 // Allow users to remove a movie from their list of favorites
-app.delete('/users/:username/favorites/:movieId', (req, res) => {
-  res.send('The movie has been removed from your favorite list');
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username}, {
+    $pull: { FavoriteMovies: req.params.MovieID }
+  },
+  { new: true },
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    } else {
+      res.json(updatedUser);
+    }
+  });
 });
+
 // Allow existing users to deregister
-app.delete('/users/:username', (req, res) => {
-  res.send('The user has been removed from the app');
+app.delete('/users/:Username', (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(`${req.params.Username} was not found.`);
+      } else {
+        res.status(200).send(`${req.params.Username} was deleted.`);
+      }
+    })
+    .catch((err) =>{
+      console.error(err);
+      res.status(500).send(`Error: ${err}`);
+    });
 });
 
 /*======
@@ -145,7 +217,7 @@ app.use(express.static('public',{extensions:['html']}));
 // Error handling  
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.stats(500).send('Sorry, something went wrong...');
+  res.status(500).send('Sorry, something went wrong...');
 });
 
 // Listen for requests
