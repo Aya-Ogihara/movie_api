@@ -27,7 +27,7 @@ passport.use(new LocalStrategy({
   });
 }));
 
-passoport.use(new JWTStrategy({
+passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'your_jwt_secret'
 }, (jwtPayload, callback) => {
