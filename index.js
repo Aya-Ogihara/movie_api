@@ -1,6 +1,8 @@
+// import modules
 const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
+  cors = require('cors'),
   mongoose = require('mongoose');
 
 // import 'model.js' file
@@ -14,6 +16,9 @@ const Users = Models.User;
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
+
+// cors
+app.use(cors());
 
 // bodyParser
 app.use(bodyParser.json());
