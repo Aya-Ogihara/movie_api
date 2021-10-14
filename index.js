@@ -100,6 +100,31 @@ app.get('/directors/:Name', (req, res) => {
   })
 });
 
+// Return a list of all actors
+app.get('/actors', (req, res) => {
+  Actors.find()
+  .then((actors) => {
+    res.status(201).json(actors);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: &{err}`);
+  });
+});
+
+// Return data about a actor by name
+app.get('/actors/:Name', (req, res) => {
+  Actors.findOne({ Name: req.params.Name })
+  .then((actor) => {
+    res.json(actor);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  })
+});
+
+
 /*======
 Users requests 
 ======*/
