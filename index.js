@@ -7,6 +7,7 @@ Models = require('./models.js');
 const Movies = Models.Movie;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+const Actors = Models.Actor;
 const Users = Models.User;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 
 // Return a list of all movies
 app.get('/movies', (req, res) => {
-  Movies.find().populate('Genre').populate('Director')
+  Movies.find().populate('Genre').populate('Director').populate('Actors')
     .then((movies) => {
       res.status(201).json(movies);
     })
@@ -41,7 +42,7 @@ app.get('/movies', (req, res) => {
 
 // Return data about a single movie by title
 app.get('/movies/:Title', (req, res) => {
-  Movies.findOne({ Title: req.params.Title }).populate('Genre').populate('Director')
+  Movies.findOne({ Title: req.params.Title }).populate('Genre').populate('Director').populate('Actors')
   .then((movie) => {
     res.json(movie);
   })
