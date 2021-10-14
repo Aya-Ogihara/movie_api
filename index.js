@@ -7,6 +7,7 @@ Models = require('./models.js');
 const Movies = Models.Movie;
 const Genres = Models.Genre;
 const Directors = Models.Director;
+const Actors = Models.Actor;
 const Users = Models.User;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 
 // Return a list of all movies
 app.get('/movies', (req, res) => {
-  Movies.find()
+  Movies.find().populate('Genre').populate('Director').populate('Actors')
     .then((movies) => {
       res.status(201).json(movies);
     })
@@ -41,7 +42,7 @@ app.get('/movies', (req, res) => {
 
 // Return data about a single movie by title
 app.get('/movies/:Title', (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+  Movies.findOne({ Title: req.params.Title }).populate('Genre').populate('Director').populate('Actors')
   .then((movie) => {
     res.json(movie);
   })
@@ -98,6 +99,31 @@ app.get('/directors/:Name', (req, res) => {
     res.status(500).send(`Error: ${err}`);
   })
 });
+
+// Return a list of all actors
+app.get('/actors', (req, res) => {
+  Actors.find()
+  .then((actors) => {
+    res.status(201).json(actors);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: &{err}`);
+  });
+});
+
+// Return data about a actor by name
+app.get('/actors/:Name', (req, res) => {
+  Actors.findOne({ Name: req.params.Name })
+  .then((actor) => {
+    res.json(actor);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  })
+});
+
 
 /*======
 Users requests 
