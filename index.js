@@ -1,8 +1,8 @@
 const express = require('express'),
-morgan = require('morgan'),
-bodyParser = require('body-parser'),
-mongoose = require('mongoose'),
-Models = require('./models.js');
+  morgan = require('morgan'),
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
+  Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Genres = Models.Genre;
