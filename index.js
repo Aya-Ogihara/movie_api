@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 
 // Return a list of all movies
 app.get('/movies', (req, res) => {
-  Movies.find()
+  Movies.find().populate('Genre').populate('Director')
     .then((movies) => {
       res.status(201).json(movies);
     })
@@ -41,7 +41,7 @@ app.get('/movies', (req, res) => {
 
 // Return data about a single movie by title
 app.get('/movies/:Title', (req, res) => {
-  Movies.findOne({ Title: req.params.Title })
+  Movies.findOne({ Title: req.params.Title }).populate('Genre').populate('Director')
   .then((movie) => {
     res.json(movie);
   })
