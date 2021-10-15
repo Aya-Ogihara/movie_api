@@ -15,7 +15,10 @@ const Directors = Models.Director;
 const Actors = Models.Actor;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
+
+//connect MongoDB Atlas database
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
 
