@@ -5,8 +5,6 @@ const express = require('express'),
   cors = require('cors'),
   mongoose = require('mongoose');
 
-const { check, validationResult } = require('express-validator');
-
 // import 'model.js' file
 const Models = require('./models.js');
 const Movies = Models.Movie;
@@ -15,6 +13,10 @@ const Directors = Models.Director;
 const Actors = Models.Actor;
 const Users = Models.User;
 
+// validation
+const { check, validationResult } = require('express-validator');
+
+//connect localhost
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 //connect MongoDB Atlas database
@@ -35,6 +37,7 @@ const auth = require('./auth')(app);
 // import 'passport.js' file
 const passport = require('passport');
 require = ('./passport');
+
 
 // Log all requests to console
 app.use(morgan('common'));
@@ -158,6 +161,7 @@ Users requests
   Email: String, (required)
   Birthday: Date
 }*/
+
 app.post('/users', [
   check('Username', 'Username is required').not().isEmpty(),
   check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
