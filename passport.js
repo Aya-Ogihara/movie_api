@@ -1,3 +1,4 @@
+// import modules
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
   Models = require('./models.js'),
@@ -19,7 +20,10 @@ passport.use(new LocalStrategy({
     }
     if (!user) {
       console.log('incorrect username');
-      return callback(null, false, {message: 'Incorrect username or password.'});
+      return callback(null, false, {message: 'Incorrect username.'});
+    }
+    if (!user.validatePassword(password)) {
+      return callback(null, false, {message: 'Incorrect password.'});
     }
 
     console.log('finished');
