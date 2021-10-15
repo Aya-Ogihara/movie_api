@@ -1,7 +1,11 @@
+// import modules
 const express = require('express'),
   morgan = require('morgan'),
   bodyParser = require('body-parser'),
+  cors = require('cors'),
   mongoose = require('mongoose');
+
+const { check, validationResult } = require('express-validator');
 
 // import 'model.js' file
 const Models = require('./models.js');
@@ -14,6 +18,9 @@ const Users = Models.User;
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
+
+// cors
+app.use(cors());
 
 // bodyParser
 app.use(bodyParser.json());
@@ -148,7 +155,13 @@ Users requests
   Email: String, (required)
   Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users', [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email dose not appear to be valid').isEmail()
+], (req, res) => {
+  const hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username})
     .then((user) => {
       if (user) {
@@ -157,7 +170,7 @@ app.post('/users', (req, res) => {
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
@@ -257,6 +270,7 @@ app.use((err, req, res, next) => {
 });
 
 // Listen for requests
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.')
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Listening on Port ${port}`);
 });
