@@ -5,6 +5,8 @@ const express = require('express'),
   cors = require('cors'),
   mongoose = require('mongoose');
 
+const { check, validationResult } = require('express-validator');
+
 // import 'model.js' file
 const Models = require('./models.js');
 const Movies = Models.Movie;
@@ -153,7 +155,12 @@ Users requests
   Email: String, (required)
   Birthday: Date
 }*/
-app.post('/users', (req, res) => {
+app.post('/users', [
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email dose not appear to be valid').isEmail()
+], (req, res) => {
   const hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username})
     .then((user) => {
