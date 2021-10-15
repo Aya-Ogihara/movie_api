@@ -15,10 +15,10 @@ const Directors = Models.Director;
 const Actors = Models.Actor;
 const Users = Models.User;
 
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 //connect MongoDB Atlas database
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, UseUnifiedTopology: true});
+//mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, UseUnifiedTopology: true});
 
 const app = express();
 
@@ -162,8 +162,14 @@ app.post('/users', [
   check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email dose not appear to be valid').isEmail()
+  check('Email', 'Email does not appear to be valid').isEmail()
 ], (req, res) => {
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array()})
+  }
+
   const hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username})
     .then((user) => {
