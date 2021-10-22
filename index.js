@@ -25,7 +25,7 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, UseUnifie
 const app = express();
 
 // cors
-//app.use(cors());
+app.use(cors());
 // let allowedOrigins = ['http://localhost:8080', 'http://testsite.com','http://localhost:1234', 'https://upload.wikimedia.org/'];
 
 // app.use(cors({
