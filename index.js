@@ -64,18 +64,7 @@ app.get('/', (req, res) => {
 });
 
 // Return a list of all movies
-// app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   Movies.find().populate('Genre').populate('Director').populate('Actors')
-//     .then((movies) => {
-//       res.status(201).json(movies);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send(`Error: &{err}`);
-//     });
-// });
-
-app.get('/movies',(req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find().populate('Genre').populate('Director').populate('Actors')
     .then((movies) => {
       res.status(201).json(movies);
@@ -86,20 +75,8 @@ app.get('/movies',(req, res) => {
     });
 });
 
-
 // Return data about a single movie by title
-// app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
-//   Movies.findOne({ Title: req.params.Title }).populate('Genre').populate('Director').populate('Actors')
-//   .then((movie) => {
-//     res.json(movie);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     res.status(500).send(`Error: ${err}`);
-//   })
-// });
-
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.Title }).populate('Genre').populate('Director').populate('Actors')
   .then((movie) => {
     res.json(movie);
