@@ -17,7 +17,7 @@ const Users = Models.User;
 const { check, validationResult } = require('express-validator');
 
 //connect localhost
-//mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, UseUnifiedTopology: true});
 
 //connect MongoDB Atlas database
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, UseUnifiedTopology: true});
@@ -210,6 +210,18 @@ app.post('/users', [
       console.error(error);
       res.status(500).send(`Error: ${error}`);
     })
+});
+
+// Get user info
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+  .then((user) => {
+    res.json(user);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send(`Error: ${err}`);
+  })
 });
 
 // Allow users to update their user info by username
