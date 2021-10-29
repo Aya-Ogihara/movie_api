@@ -178,7 +178,7 @@ app.post('/users', [
   check('Username', 'Username is required').not().isEmpty(),
   check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
   check('Password', 'Password is required to have a minimum length of 8 characters.').isLength({min: 8}),
-  check('Email', 'Email does not appear to be a valid format').isEmail()
+  //check('Email', 'Email does not appear to be a valid format').isEmail()
 ], (req, res) => {
   const errors = validationResult(req);
 
