@@ -226,10 +226,11 @@ app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (r
 
 // Allow users to update their user info by username
 app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username: req.params.Username }, { $set: 
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
