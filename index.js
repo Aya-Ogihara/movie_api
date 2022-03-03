@@ -1,3 +1,11 @@
+/**
+ * myFlix API
+ * @author Aya Ogihara <https://ayaogihara.com/>
+ * @description 'myFlix' is a web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movie
+ * See [Documentation]{@tutorial documentation} to learn about how to use the APIs
+ */
+
+
 // import modules
 const express = require('express'),
   morgan = require('morgan'),
