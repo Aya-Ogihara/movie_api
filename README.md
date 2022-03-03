@@ -1,6 +1,12 @@
 # myFlix API
+<img align=top src="https://res.cloudinary.com/yaponka/image/upload/v1642041807/portfolio/myflix.png" width="600">
 
-myFlix live page: [myFlix](https://aya-ogihara.github.io/MEAN_myFlix/welcome)
+myFlix live page (Angular): [myFlix-Angular](https://aya-ogihara.github.io/MEAN_myFlix/welcome)
+ - Repo: [https://github.com/Aya-Ogihara/myFlix-Angular](https://github.com/Aya-Ogihara/myFlix-Angular)
+
+
+myFlix live page (React): [myFlix-React](https://myfilix-aya.netlify.app/)
+ - Repo: [https://github.com/Aya-Ogihara/myFilx-client](https://github.com/Aya-Ogihara/myFilx-client)
 
 ## Objective
 To build the server-side component of a “movies” web application. 
